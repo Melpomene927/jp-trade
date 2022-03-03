@@ -24,12 +24,7 @@ class Company(models.Model):
     createdon = models.DateTimeField(_('建檔日期'), auto_now_add=True)
     name = models.CharField(_('公司名稱'), max_length=50, primary_key=True)
     GUI = models.CharField(_('統一編號'), max_length=20, null=True)
-    country = models.ForeignKey(Country, verbose_name=_('註冊國家'), on_delete=RESTRICT)
-    address = models.CharField(_('地址'), max_length=100, null=True)
-    addressJP = models.CharField(_('地址(日文)'), max_length=100, null=True)
-    addressEN = models.CharField(_('地址(英文)'), max_length=100, null=True)
-    phone = models.CharField(_('連絡電話'), max_length=20, null=True)
-    FAX = models.CharField(_('傳真號碼'), max_length=20, null=True)
+    country = models.ForeignKey(Country, verbose_name=_('註冊國家'), on_delete=RESTRICT) 
     email = models.CharField(_('連絡Email'), max_length=20, null=True)
 
     class Meta:
@@ -42,7 +37,13 @@ class Company(models.Model):
 class Department(models.Model):
     """部門"""
     name = models.CharField(_('部門名稱'), max_length=20, primary_key=True)
-    createdon = models.DateTimeField(_('建檔日期'),auto_now_add=True)
+    createdon = models.DateTimeField(_('建檔日期'), auto_now_add=True)
+    address = models.CharField(_('地址'), max_length=100, null=True, blank=True)
+    addressJP = models.CharField(_('地址(日文)'), max_length=100, null=True, blank=True)
+    addressEN = models.CharField(_('地址(英文)'), max_length=100, null=True, blank=True)
+    phone = models.CharField(_('連絡電話'), max_length=20, null=True, blank=True)
+    FAX = models.CharField(_('傳真號碼'), max_length=20, null=True, blank=True)
+    email = models.CharField(_('連絡Email'), max_length=20, null=True, blank=True)
 
     class Meta:
         ordering = ['name']
@@ -72,6 +73,7 @@ class Warehouse(models.Model):
 
     class Meta:
         ordering = ['name']
+        verbose_name=_('倉儲')
 
     def __str__(self):
         return f'{self.name}'
@@ -117,11 +119,11 @@ class Invoice(models.Model):
     number = models.CharField(_('發票號碼'), max_length=16, unique=True)
     invoice_date = models.DateField(_('發票日期'), auto_now_add=True, editable=True)
     createdon = models.DateTimeField(_('建檔日期'), auto_now_add=True)
-    MAWB = models.CharField(_('清關條碼 (MAWB)'), max_length=20)
-    HAWB = models.CharField(_('提單號 (HAWB)'), max_length=20)
+    MAWB = models.CharField(_('清關條碼 (MAWB)'), max_length=20, blank=True)
+    HAWB = models.CharField(_('提單號 (HAWB)'), max_length=20, blank=True)
     trade_terms = models.CharField(_('貿易條款'), max_length=3,choices=TradeTerms.choices)
     payment_terms = models.CharField(_('付款條款'), max_length=20, choices=PaymentTerms.choices)
-    flight = models.CharField(_('航班號碼'), max_length=20)
+    flight = models.CharField(_('航班號碼'), max_length=20, blank=True)
 
     class Meta:
         ordering = ['number']
@@ -144,6 +146,7 @@ class Package(models.Model):
 
     class Meta:
         ordering = ['-createdon']
+        verbose_name=_('包裹')
 
     def __str__(self):
         return f'{self.pkg_number}'

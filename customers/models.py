@@ -11,8 +11,15 @@ import uuid
 # Create your models here.
 
 class Express(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    createdon = models.DateTimeField(_('建檔時間'), auto_now_add=True)
+    name = models.CharField(_('公司名稱'), max_length=50, unique=True)
 
+    class Meta:
+        ordering = ['createdon']
+        verbose_name = _('物流公司')
+
+    def __str__(self): 
+        return f'{self.name}'
 
 class Delivery(models.Model):
     createdon = models.DateTimeField(_('建檔時間'), auto_now_add=True)
@@ -44,7 +51,7 @@ class Customer(models.Model):
 
     class Meta:
         ordering = ['-createdon']
-        verbose_name = _('顧客')
+        verbose_name = _('客戶')
 
     def __str__(self):
         return f'{self.name}'
@@ -58,7 +65,7 @@ class Contact(models.Model):
         WeChat = 'WeChat', _('微信')
         FB = 'FB', 'FaceBook'
         Other = 'Other', _('其他')
-    person = models.ForeignKey(Customer, verbose_name=_('顧客'), null=True, on_delete=SET_NULL)
+    person = models.ForeignKey(Customer, verbose_name=_('客戶'), null=True, on_delete=SET_NULL)
     createdon = models.DateTimeField(_('建檔時間'), auto_now_add=True)
     email = models.EmailField(_('Email'))
     media_type = models.CharField(_('聯絡方式'), max_length=20, choices=ContactMedia.choices, default=ContactMedia.Mobile)
@@ -66,7 +73,7 @@ class Contact(models.Model):
 
     class Meta:
         ordering = ['-createdon']
-        verbose_name = _('顧客聯絡簿')
+        verbose_name = _('客戶聯絡簿')
 
     def __str__(self):
         return f'{self.firstname} {self.lastname}'
@@ -75,8 +82,8 @@ class Contact(models.Model):
 class CustomerList(models.Model):
     createdon = models.DateTimeField(_('建檔時間'), auto_now_add=True)
     department = models.ForeignKey(Department, verbose_name=_('部門'), on_delete=RESTRICT)
-    customer_id = models.ForeignKey(Customer, verbose_name=_('顧客代號'), on_delete=CASCADE, related_name='CustomerList_customer_id')
-    customer_name = models.ForeignKey(Customer, verbose_name=_('顧客姓名'), to_field='name', on_delete=CASCADE, related_name='CustomerList_customer_name')
+    customer_id = models.ForeignKey(Customer, verbose_name=_('客戶代號'), on_delete=CASCADE, related_name='CustomerList_customer_id')
+    customer_name = models.ForeignKey(Customer, verbose_name=_('客戶姓名'), to_field='name', on_delete=CASCADE, related_name='CustomerList_customer_name')
 
 
     class Meta:
@@ -90,8 +97,8 @@ class CallReport(models.Model):
     createdon = models.DateTimeField(_('建檔時間'), auto_now_add=True)
     createdby = models.ForeignKey(Profile, verbose_name=_('建檔人員'), null=True, on_delete=SET_NULL)
     department = models.ForeignKey(Department, verbose_name=_('部門'), on_delete=RESTRICT)
-    customer_id = models.ForeignKey(Customer, verbose_name=_('顧客代號'), on_delete=CASCADE, related_name='CallReport_customer_id')
-    customer_name = models.ForeignKey(Customer, verbose_name=_('顧客姓名'), to_field='name', on_delete=CASCADE, related_name='CallReport_customer_name')
+    customer_id = models.ForeignKey(Customer, verbose_name=_('客戶代號'), on_delete=CASCADE, related_name='CallReport_customer_id')
+    customer_name = models.ForeignKey(Customer, verbose_name=_('客戶姓名'), to_field='name', on_delete=CASCADE, related_name='CallReport_customer_name')
     report = models.TextField(_('報告'))
 
     class Meta:
@@ -117,8 +124,8 @@ class Order(models.Model):
     createdon = models.DateTimeField(_('建檔時間'), auto_now_add=True)
     createdby = models.ForeignKey(Profile, verbose_name=_('建檔人員'), null=True, on_delete=SET_NULL)
     order_number = models.CharField(_('訂單編號'), max_length=12, default=Get_Order_Number, unique=True)
-    customer_id = models.ForeignKey(Customer, verbose_name=_('顧客'),  on_delete=CASCADE, related_name='Order_customer_id')
-    customer_name = models.ForeignKey(Customer, verbose_name=_('顧客姓名'), to_field='name',  on_delete=CASCADE, related_name='Order_customer_name')
+    customer_id = models.ForeignKey(Customer, verbose_name=_('客戶'),  on_delete=CASCADE, related_name='Order_customer_id')
+    customer_name = models.ForeignKey(Customer, verbose_name=_('客戶姓名'), to_field='name',  on_delete=CASCADE, related_name='Order_customer_name')
     delivery = models.ManyToManyField(Delivery, verbose_name=_('運送資訊'))
 
     class Meta:

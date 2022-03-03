@@ -5,6 +5,7 @@ from .models import *
 admin.site.register(PricingTerms)
 admin.site.register(Category)
 admin.site.register(CatagoryPrice)
+admin.site.register(OriginCountry)
 admin.site.register(Origin)
 admin.site.register(Element)
 admin.site.register(Unit)
