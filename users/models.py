@@ -14,7 +14,8 @@ class Profile(AbstractUser):
     createdon = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.username
+        _name = f'{self.last_name}{self.first_name}' if self.first_name != "" else self.username
+        return _name
         
     class Meta:
         ordering = ['id']
