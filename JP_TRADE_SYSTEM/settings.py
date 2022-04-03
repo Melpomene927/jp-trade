@@ -80,12 +80,12 @@ WSGI_APPLICATION = 'JP_TRADE_SYSTEM.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 # DATABASES = {
 #     "default": {
 #         "ENGINE": "mssql",
@@ -99,6 +99,16 @@ DATABASES = {
 #         },
 #     },
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': '9745gu!9452',
+        'HOST': 'jp-trade-db.c4djuadqdvzs.ap-northeast-1.rds.amazonaws.com',
+        'PORT': '5432',
+    }
+}
 
 
 # Password validation
