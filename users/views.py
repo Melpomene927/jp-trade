@@ -4,6 +4,9 @@ from django.contrib.auth.decorators import login_required
 from .models import Profile
 from .forms import ProfileForm
 from django.utils.translation import gettext_lazy as _
+import xlsxwriter
+import io
+from django.http import HttpResponse
 
 # Create your views here.
 
@@ -116,3 +119,22 @@ def profile(request,id):
     }
     # print(user)
     return render(request, './users/profile.html', _params)
+
+
+def export_excel_test(request):
+    # create our spreadsheet.  I will create it in memory with a StringIO
+    output = io.BytesIO()
+    workbook = xlsxwriter.Workbook(output)
+    worksheet = workbook.add_worksheet()
+    worksheet.write('A1', 'Some Data')
+    workbook.close()
+    output.seek(0)
+
+    # create a response
+    response = HttpResponse(output, content_type='application/vnd.ms-excel')
+
+    # tell the browser what the file is named
+    response['Content-Disposition'] = 'attachment;filename="some_file_name.xlsx"'
+
+    # return the response
+    return response

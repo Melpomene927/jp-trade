@@ -9,4 +9,5 @@ urlpatterns = [
     path('register/', views.user_register, name='register'),
     path('profile/<str:id>', views.profile, name='profile'),
     path('update/<str:id>', views.user_update, name='update'),
+    path('exceltest/', views.export_excel_test, name='exceltest'),
 ]
