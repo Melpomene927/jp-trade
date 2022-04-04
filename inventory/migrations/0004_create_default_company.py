@@ -13,7 +13,7 @@ def create_default_company(apps, schema_editor):
 
 def reverse_create_default_company(apps, schema_editor):
     Company = apps.get_model('inventory', 'Company')
-    for _company in Company.objects.filter(id=1):
+    for _company in Company.objects.filter(name='株式会社光のハウス'):
          _company.delete()
 
 class Migration(migrations.Migration):
