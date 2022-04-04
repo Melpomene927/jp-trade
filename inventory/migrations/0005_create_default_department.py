@@ -26,6 +26,6 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RunPython(
             create_default_department,
-            create_default_department
+            reverse_create_default_department
         ),
     ]

@@ -11,6 +11,7 @@ import uuid
 # Create your models here.
 
 class Express(models.Model):
+    """物流公司"""
     createdon = models.DateTimeField(_('建檔時間'), auto_now_add=True)
     name = models.CharField(_('公司名稱'), max_length=50, unique=True)
 
@@ -22,6 +23,7 @@ class Express(models.Model):
         return f'{self.name}'
 
 class Delivery(models.Model):
+    """物流送件"""
     createdon = models.DateTimeField(_('建檔時間'), auto_now_add=True)
     courier = models.ForeignKey(Express, verbose_name=_('貨運公司'),  on_delete=RESTRICT)
     package_id = models.ForeignKey(Package, verbose_name=_('包裹'), null=True, on_delete=SET_NULL)
@@ -35,7 +37,7 @@ class Delivery(models.Model):
 
     class Meta:
         ordering = ['-createdon']
-        verbose_name = _('物流清單')
+        verbose_name = _('物流送件')
 
     def __str__(self):
         _other = f'({self.display})' if self.display != self.name else ''
@@ -43,8 +45,9 @@ class Delivery(models.Model):
 
 
 class Customer(models.Model):
+    """客戶"""
     createdon = models.DateTimeField(_('建檔時間'), auto_now_add=True)
-    name = models.CharField(_('姓名'), max_length=50, unique=True, null=False)
+    name = models.CharField(_('姓名'), max_length=50, unique=True)
     nameJP = models.CharField(_('姓名(日)'), max_length=50, null=True, blank=True)
     nameEN = models.CharField(_('姓名(英)'), max_length=50, null=True, blank=True)
     
@@ -58,6 +61,7 @@ class Customer(models.Model):
 
 
 class Contact(models.Model):
+    """客戶聯絡簿"""
     class ContactMedia(models.TextChoices):
         Mobile = 'Mobile', _('手機')
         Phone = 'Phone', _('市話')
@@ -80,6 +84,7 @@ class Contact(models.Model):
 
 
 class CustomerList(models.Model):
+    """部門開發客戶"""
     createdon = models.DateTimeField(_('建檔時間'), auto_now_add=True)
     department = models.ForeignKey(Department, verbose_name=_('部門'), on_delete=RESTRICT)
     customer_id = models.ForeignKey(Customer, verbose_name=_('客戶代號'), on_delete=CASCADE, related_name='CustomerList_customer_id')
@@ -94,6 +99,7 @@ class CustomerList(models.Model):
         return f'{self.department} {self.customer_id:8d} {self.customer_name}'
 
 class CallReport(models.Model):
+    """客戶拜訪報告"""
     createdon = models.DateTimeField(_('建檔時間'), auto_now_add=True)
     createdby = models.ForeignKey(Profile, verbose_name=_('建檔人員'), null=True, on_delete=SET_NULL)
     department = models.ForeignKey(Department, verbose_name=_('部門'), on_delete=RESTRICT)
@@ -120,6 +126,7 @@ def Get_Order_Number(date=datetime.now()):
 
 
 class Order(models.Model):
+    """訂單"""
     uuid = models.UUIDField(_('訂單唯一碼'), primary_key=True, default=uuid.uuid4, editable=False)
     createdon = models.DateTimeField(_('建檔時間'), auto_now_add=True)
     createdby = models.ForeignKey(Profile, verbose_name=_('建檔人員'), null=True, on_delete=SET_NULL)

@@ -105,7 +105,7 @@ class Unit(models.Model):
     """計價單位"""
     createdon = models.DateTimeField(_('建檔日期'), auto_now_add=True)
     note = models.CharField(_('單位標記'), help_text=_('請輸入KG, L, M...等單位記號'),max_length=10, primary_key=True)
-    name = models.CharField(_('單位名稱'),max_length=20)
+    name = models.CharField(_('單位名稱'), max_length=20)
 
     class Meta:
         ordering = ['note']
@@ -126,8 +126,8 @@ class Good(models.Model):
     barcode = models.CharField(_('條碼'), max_length=50)
     catagory = models.ForeignKey(Category, verbose_name=_('類別'), null=True, on_delete=SET_NULL)
     origin = models.ForeignKey(Origin, verbose_name=_('產地'), null=True, on_delete=SET_NULL)
-    description = models.TextField(_('說明'),help_text=_('外部說明'), blank=True)
-    memo = models.TextField(_('內部註記或雜記'), blank=True)
+    description = models.TextField(_('說明'),help_text=_('外部說明'),  null=True, blank=True)
+    memo = models.TextField(_('內部註記或雜記'),  null=True, blank=True)
     composition = models.ManyToManyField(Element, verbose_name=_('組成成分'))
     unit_price = models.DecimalField(_('標準單價'), max_digits=19, decimal_places=2)
     unit = models.ForeignKey(Unit, verbose_name=('計價單位'), on_delete=RESTRICT)

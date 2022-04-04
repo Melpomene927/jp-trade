@@ -5,8 +5,9 @@ from django.contrib.auth.hashers import make_password
 
 def create_default_superuser(apps, schema_editor):
     Profile = apps.get_model('users', 'Profile')
-    _superuser = Profile.objects.create(username='hkrrio', email='moongloaming@gmail.com', password=make_password('111111'), is_superuser=True)
-    _superuser.save()
+    Profile.objects.create_superuser('hkrrio', 'admin@example.com', '111111')
+    # _superuser = Profile.objects.create(username='hkrrio', email='moongloaming@gmail.com', password=make_password('111111'), is_superuser=True)
+    # _superuser.save()
     
 def reverse_create_default_superuser(apps, schema_editor):
     Profile = apps.get_model('users', 'Profile')

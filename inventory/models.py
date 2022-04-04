@@ -9,8 +9,8 @@ from django.utils.translation import gettext_lazy as _
 # Create your models here.
 class Country(models.Model):
     """國家"""
-    name = models.CharField(_('國家'),max_length=50, null=False)
-    code = models.CharField(_('ISO碼'),max_length=3, null=False)
+    name = models.CharField(_('國家'),max_length=50)
+    code = models.CharField(_('ISO碼'),max_length=3)
 
     class Meta:
         ordering = ['code']
@@ -23,9 +23,9 @@ class Company(models.Model):
     """註冊公司"""
     createdon = models.DateTimeField(_('建檔日期'), auto_now_add=True)
     name = models.CharField(_('公司名稱'), max_length=50, primary_key=True)
-    GUI = models.CharField(_('統一編號'), max_length=20, null=True)
+    GUI = models.CharField(_('統一編號'), max_length=20, null=True, blank=True)
     country = models.ForeignKey(Country, verbose_name=_('註冊國家'), on_delete=RESTRICT) 
-    email = models.CharField(_('連絡Email'), max_length=50, null=True)
+    email = models.CharField(_('連絡Email'), max_length=50, null=True, blank=True)
 
     class Meta:
         ordering = ['name']
@@ -119,11 +119,11 @@ class Invoice(models.Model):
     number = models.CharField(_('發票號碼'), max_length=16, unique=True)
     invoice_date = models.DateField(_('發票日期'), auto_now_add=True, editable=True)
     createdon = models.DateTimeField(_('建檔日期'), auto_now_add=True)
-    MAWB = models.CharField(_('清關條碼 (MAWB)'), max_length=20, blank=True)
-    HAWB = models.CharField(_('提單號 (HAWB)'), max_length=20, blank=True)
+    MAWB = models.CharField(_('清關條碼 (MAWB)'), max_length=20, null=True, blank=True)
+    HAWB = models.CharField(_('提單號 (HAWB)'), max_length=20, null=True, blank=True)
     trade_terms = models.CharField(_('貿易條款'), max_length=3,choices=TradeTerms.choices)
     payment_terms = models.CharField(_('付款條款'), max_length=20, choices=PaymentTerms.choices)
-    flight = models.CharField(_('航班號碼'), max_length=20, blank=True)
+    flight = models.CharField(_('航班號碼'), max_length=20, null=True, blank=True)
 
     class Meta:
         ordering = ['number']
@@ -136,7 +136,7 @@ class Invoice(models.Model):
 class Package(models.Model):
     """包裹"""
     uuid = models.UUIDField(_('包裹唯一碼'), primary_key=True, default=uuid.uuid4, editable=False)
-    pkg_number = models.CharField(_('清關條碼 (MAWB)'), max_length=20, blank=True, null=True)
+    pkg_number = models.CharField(_('清關條碼 (MAWB)'), max_length=20, null=True, blank=True)
     createdon = models.DateTimeField(_('建檔日期'),auto_now_add=True)
     length = models.FloatField(_('長度'))
     width = models.FloatField(_('寬度'))
