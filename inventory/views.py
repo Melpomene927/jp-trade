@@ -8,3 +8,10 @@ def inventory_list(request):
     }
     
     return render(request, "./inventory/inventory.html", _params)
+    
+def package(request):
+    _params = {
+        "title": _('出貨打包')
+    }
+    
+    return render(request, "./inventory/package.html", _params)

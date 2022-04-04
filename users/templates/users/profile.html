@@ -1,18 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Profile</h1>
+<h1>{{title}}</h1>
 <ul>
     <li>{{user.username}}</li>
     <li>Email:{{user.email}}</li>
-    <li>
-        {% if not user.certification %}
-        <a href="">認證</a>
-        {% else %}
-        已認證
-        {% endif %}
-    </li>
 </ul>
-<a href="">資訊修改</a>
-<a href="">點數儲值</a>
+<a href="{% url 'update' request.user.id %}">資訊修改</a>
 
 {% endblock %}

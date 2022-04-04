@@ -6,6 +6,6 @@ def customer_list(request):
     _params ={
         "title": _('顧客清單')
     }
-    return render(request, "./goods/goods.html", _params)
+    return render(request, "./customers/customers.html", _params)
 
     
