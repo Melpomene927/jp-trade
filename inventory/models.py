@@ -43,7 +43,7 @@ class Department(models.Model):
     addressEN = models.CharField(_('地址(英文)'), max_length=100, null=True, blank=True)
     phone = models.CharField(_('連絡電話'), max_length=20, null=True, blank=True)
     FAX = models.CharField(_('傳真號碼'), max_length=20, null=True, blank=True)
-    email = models.CharField(_('連絡Email'), max_length=20, null=True, blank=True)
+    email = models.CharField(_('連絡Email'), max_length=50, null=True, blank=True)
 
     class Meta:
         ordering = ['name']
