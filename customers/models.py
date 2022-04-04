@@ -45,8 +45,8 @@ class Delivery(models.Model):
 class Customer(models.Model):
     createdon = models.DateTimeField(_('建檔時間'), auto_now_add=True)
     name = models.CharField(_('姓名'), max_length=50, unique=True, null=False)
-    nameJP = models.CharField(_('姓名(日)'), max_length=50)
-    nameEN = models.CharField(_('姓名(英)'), max_length=50)
+    nameJP = models.CharField(_('姓名(日)'), max_length=50, null=True, blank=True)
+    nameEN = models.CharField(_('姓名(英)'), max_length=50, null=True, blank=True)
     
 
     class Meta:
@@ -76,7 +76,7 @@ class Contact(models.Model):
         verbose_name = _('客戶聯絡簿')
 
     def __str__(self):
-        return f'{self.firstname} {self.lastname}'
+        return f'{self.person} {self.media_type} {self.media_number}'
 
 
 class CustomerList(models.Model):
@@ -120,7 +120,7 @@ def Get_Order_Number(date=datetime.now()):
 
 
 class Order(models.Model):
-    uuid = models.UUIDField(_('訂單唯一碼'), primary_key=True, default=uuid.uuid4(), editable=False)
+    uuid = models.UUIDField(_('訂單唯一碼'), primary_key=True, default=uuid.uuid4, editable=False)
     createdon = models.DateTimeField(_('建檔時間'), auto_now_add=True)
     createdby = models.ForeignKey(Profile, verbose_name=_('建檔人員'), null=True, on_delete=SET_NULL)
     order_number = models.CharField(_('訂單編號'), max_length=12, default=Get_Order_Number, unique=True)
