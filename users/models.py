@@ -9,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Profile(AbstractUser):
-    """"""
+    """自訂使用者"""
     email=models.EmailField(unique=True,null=False)
     createdon = models.DateTimeField(auto_now_add=True)
 

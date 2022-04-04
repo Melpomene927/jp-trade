@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
-<header>
-    <h1>Welcome</h1>
+<header class="pb-2 mb-4 border-bottom">
+    <h1 class="display-3">Welcome</h1>
 </header>
-<p>
-    <a href="{% url 'exceltest' %}">test excel</a>
-</p>
+<main>
+    <p>
+        <a class="" href="{% url 'exceltest' %}">test excel</a>
+    </p>
+</main>
 {% endblock %}

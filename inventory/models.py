@@ -25,7 +25,7 @@ class Company(models.Model):
     name = models.CharField(_('公司名稱'), max_length=50, primary_key=True)
     GUI = models.CharField(_('統一編號'), max_length=20, null=True)
     country = models.ForeignKey(Country, verbose_name=_('註冊國家'), on_delete=RESTRICT) 
-    email = models.CharField(_('連絡Email'), max_length=20, null=True)
+    email = models.CharField(_('連絡Email'), max_length=50, null=True)
 
     class Meta:
         ordering = ['name']
@@ -135,7 +135,7 @@ class Invoice(models.Model):
 
 class Package(models.Model):
     """包裹"""
-    uuid = models.UUIDField(_('包裹唯一碼'), primary_key=True, default=uuid.uuid4(), editable=False)
+    uuid = models.UUIDField(_('包裹唯一碼'), primary_key=True, default=uuid.uuid4, editable=False)
     pkg_number = models.CharField(_('清關條碼 (MAWB)'), max_length=20, blank=True, null=True)
     createdon = models.DateTimeField(_('建檔日期'),auto_now_add=True)
     length = models.FloatField(_('長度'))
